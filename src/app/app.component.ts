@@ -8,10 +8,10 @@ import { CubeComponent } from './cube/cube/cube.component';
 @Component({
   selector: 'my-app',
   template: `
-    <ng-container *ngIf="id$ | async as id">
+    <div *ngIf="id$ | async as id" class="nav">
       <button (click)="prev(id)" [disabled]="!(hasPrev$ | async)">Back</button>
       <button (click)="next(id)" [disabled]="!(hasNext$ | async)">Next</button>
-    </ng-container>
+    </div>
 
     <app-cube #cube>
       <ng-template #prevTpl>
@@ -28,6 +28,7 @@ import { CubeComponent } from './cube/cube/cube.component';
       </ng-template>
     </app-cube>
   `,
+  styles: [`:host { display: block; margin: 24px;}.nav { position: fixed; right: 0; z-index:1000;`]
 })
 export class AppComponent {
   @ViewChild(CubeComponent, { static: false }) cube: CubeComponent;

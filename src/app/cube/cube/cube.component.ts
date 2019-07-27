@@ -1,4 +1,4 @@
-import { Component, OnInit, ContentChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ContentChild, TemplateRef, ElementRef, Renderer2 } from '@angular/core';
 
 type CubeSide = 'front' | 'left' | 'right' | 'back';
 
@@ -49,6 +49,13 @@ export class CubeComponent {
   private currentSide: CubeSide = 'front';
   private index = 0;
   private templatesMap: Map<CubeSide, CubeTemplates>
+
+  constructor(public elementRef: ElementRef<HTMLElement>, public renderer: Renderer2) {}
+
+  ngAfterViewInit() {
+    const { width } = this.elementRef.nativeElement.getBoundingClientRect();
+    this.elementRef.nativeElement.style.setProperty('--z', `${(width/2-1).toFixed(0)}px`)
+  }
 
   ngAfterContentInit() {
     this.templatesMap = new Map<CubeSide, CubeTemplates>()
